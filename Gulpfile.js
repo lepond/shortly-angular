@@ -5,7 +5,8 @@ var gulp      = require('gulp'),
     bs        = require('browser-sync'),
     reload    = bs.reload,
     when      = require('gulp-if'),
-    shell     = require('gulp-shell');
+    shell     = require('gulp-shell'),
+    jshint    = require('gulp-jshint');
 
 
 // the paths to our app files
@@ -29,6 +30,14 @@ gulp.task('start', ['serve'],function () {
     proxy: 'localhost:8000'
   });
 });
+
+ 
+gulp.task('lint', function() {
+  return gulp.src('./client/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('fail'));
+});
+
 
 gulp.task('karma', shell.task([
   'karma start'
